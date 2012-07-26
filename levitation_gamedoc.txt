@@ -1,0 +1,30 @@
+The goal will be to charge up your psi-crystals by placing them into psionic fields. There will be five colors of psi-crystals and five colors of psionic fields. Crystals will charge faster in fields that share their color. Once fully charged, psi-crystals can be spent to gain power-ups, lane switches, or more crystals. 
+
+When a crystal is fully charged, it returns to the player's crystal container where it can be used.
+
+Crystal Colors: Blue,Green,Purple, Red, and Yellow.
+
+Each level the player will start will between two and five uncharged crystals. They must, depending on the level, charge some or all of them to move onto the next stage. 
+
+There may be psionic storms at the bottom or top of each lane. If a psi-crystal touches a psionic storm, it will take damage and be moved to the center of the lane.
+
+If a crystal is damaged, its quality will degrade, resulting in a lower quality power-up once it is fully charged. Crystals that are too badly damaged (i.e those that have hit three psionic storms) will be destroyed and that crystal will be lost that round. 
+
+Crystal qualities from worst to best: CHIPPED, NO QUALIFIER, FLAWLESS. E.g: CHIPPED Ruby, Ruby, FLAWLESS Ruby; CHIPPED Topaz, Topaz, FLAWLESS Topaz.
+
+Crystal Power-Ups: 
+
+Blue - > CHIPPED: Improves the quality of the active crystal by one. NO QUALIFIER: Improves the quality of the active crystal by two. FLAWLESS: Improves the quality of ALL crystals by 1.
+
+Green - > Crystals charge 1.5x, 2.0x, or 3.0x faster for a short time. The multiplier depends on the crystal's quality.
+
+Purple - > Increases crystal capacity by one, two, or three for duration of the current and next levels. The capacity increases depends on the crystal quality.
+
+Red - > Removes one, two, or three psionic storms depending on its quality. 
+
+Yellow - > Changes 1/3, 1/2, or all the strips in the current row the active crystal's color. The percentage depends on the yellow crystal's quality.
+
+If the player runs out of usable gems before they have met the level's quota of charged gems, the game is over.
+
+Each level will have between one and three lanes on which they can levitate psi-crystals. When a new crystal is drawn, players may choose which lane, if there is more than one available, to levitate on. If players want to switch lanes mid crystal, they must sacrifice once charged crystal of their choice. 
+
