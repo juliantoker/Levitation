@@ -56,7 +56,7 @@ class Ground(Screen_Object):
     def __init__(self):
 
         Screen_Object.__init__(self,surface_width = 500, y = 936)
-
+        print self.rect.top_left
         self.image.fill(Utilities.green)
 
     def __str__(self):
@@ -70,13 +70,13 @@ class Ground(Screen_Object):
 
 class Levitation_Object(Screen_Object):
 
-    def __init__(self):
+    def __init__(self,color):
 
         Screen_Object.__init__(self,x = screen.get_width()/2, y = 572)
-
+        self.color = color
         self.image.fill(Utilities.white)
         
-        pygame.draw.circle(self.image, Utilities.blue,
+        pygame.draw.circle(self.image, self.color,
                            (self.image.get_width()/2,
                             self.image.get_width()/2),
                            30,3)
@@ -86,7 +86,7 @@ class Levitation_Object(Screen_Object):
     def collides_with_ground(self,s_group = game_scene):
         
         collides_with = pygame.sprite.spritecollideany(self,s_group)
-        if collides_with
+        print collides_with
         return str(collides_with) == "Ground"
                         
     def update(self):
@@ -96,6 +96,7 @@ class Levitation_Object(Screen_Object):
         #Update collision rect
         self.rect.topleft = (self.x,self.y)
         check = self.collides_with_ground()
+        
         # Keeps object from falling through the ground or ceiling
         if (check and self.current_vel > 0) or (self.y < 0 and self.current_vel < 0):
             
@@ -112,16 +113,9 @@ class Levitation_Object(Screen_Object):
 
 Screen_Object.register(Ground)
 Screen_Object.register(Levitation_Object)
-
-def draw_sprites(game_scene):
-
-    for sprite in game_scene:
-        
-        sprite.draw()
-
-        
+      
 ground = Ground()
-levitator = Levitation_Object()
+levitator = Levitation_Object(Utilities.blue)
 
 running = True
 while running:
