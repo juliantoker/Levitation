@@ -1,4 +1,4 @@
-import pygame,sys,os,math,Utilities, abc
+import pygame,sys,os,math,Utilities, abc, random
 from pygame.locals import *
 from mindcontrol.userbrain import Brain
 pygame.init()
@@ -22,7 +22,7 @@ player_brain = Brain()
 pygame.font.init()
 font = pygame.font.Font(None,25)
 
-
+goal_size = (64,100,200)
 
 class Screen_Object(pygame.sprite.Sprite):
 
@@ -54,7 +54,7 @@ class Ground(Screen_Object):
     def __init__(self):
 
         Screen_Object.__init__(self,surface_width = 500, y = 936)
-
+        self.rect = self.image.get_rect()
         self.image.fill(Utilities.green)
 
     def __str__(self):
@@ -63,7 +63,7 @@ class Ground(Screen_Object):
     
     def update(self):
 
-        pass
+        self.rect.topleft = (self.x,self.y)
 
 
 class Levitation_Object(Screen_Object):
@@ -91,9 +91,7 @@ class Levitation_Object(Screen_Object):
 
         
         attention = player_brain.getProperty('attention')/100.0
-        meditation = player_brain.getProperty('meditation')/100.0
-        #print attention
-        #print meditation
+        
         self.current_vel = gravity - int(attention * max_vel)
         #Update collision rect
         self.rect.topleft = (self.x,self.y)
@@ -111,7 +109,23 @@ class Levitation_Object(Screen_Object):
         
         return 'Levitation object:\n\tx: %d\ty: %d' % (self.x, self.y)
     
+class Goal(Screen_Object):
 
+    def __init__(self,size = 0):
+        
+        Screen_Object.__init__(x = screen.get_width()/2,y = 0)
+        self.image.fill(Utilities.yellow)
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (self.x,self.y)
+        
+    def update(self):
+
+        print self.x,self.y
+        
+
+        
+
+        Screen_Object.__init__()
 Screen_Object.register(Ground)
 Screen_Object.register(Levitation_Object)
 
@@ -135,12 +149,10 @@ while running:
         time.sleep(CONNECTION_WAIT_TIME)
         continue
         
-    screen.fill(Utilities.red)
-    #draw_sprites(game_scene)
     game_scene.clear(screen,background)
     game_scene.update()
     dirty = game_scene.draw(screen)
-    print dirty
+    
     vel_text = font.render('Vel: \t' + str(levitator.current_vel),True,Utilities.black)
     screen.blit(vel_text,(0,vel_text.get_height()))
     
