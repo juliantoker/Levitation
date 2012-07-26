@@ -6,23 +6,25 @@ pygame.init()
 SCREEN_WIDTH = 500
 SCREEN_HEIGHT = 1000
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-background = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))
 screen.fill(Utilities.white)
+
+background = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))
 background.fill(Utilities.white)
+#^^^^^^^^
+# To use pygame.sprite.RenderUpdates().clear(screen,bg), you must draw the background
+#to the screen and call pygame.display.update()!!!!!!
+
 screen.blit(background, (0,0))
 pygame.display.update()
+
 game_scene = pygame.sprite.RenderUpdates()
 
 gravity = 3
-
+attention = 0
 max_vel = 7
-
-player_brain = Brain()
 
 pygame.font.init()
 font = pygame.font.Font(None,25)
-
-
 
 class Screen_Object(pygame.sprite.Sprite):
 
@@ -82,24 +84,20 @@ class Levitation_Object(Screen_Object):
         self.current_vel = 0
         
     def collides_with_ground(self,s_group = game_scene):
-
-        collides_with = pygame.sprite.spritecollideany(self,s_group)
         
+        collides_with = pygame.sprite.spritecollideany(self,s_group)
+        if collides_with
         return str(collides_with) == "Ground"
                         
     def update(self):
 
-        
-        attention = player_brain.getProperty('attention')/100.0
-        meditation = player_brain.getProperty('meditation')/100.0
-        #print attention
-        #print meditation
         self.current_vel = gravity - int(attention * max_vel)
+        
         #Update collision rect
         self.rect.topleft = (self.x,self.y)
-        
-        # Keeps object from falling through the ground
-        if (self.collides_with_ground() and self.current_vel > 0) or (self.y < 0 and self.current_vel < 0):
+        check = self.collides_with_ground()
+        # Keeps object from falling through the ground or ceiling
+        if (check and self.current_vel > 0) or (self.y < 0 and self.current_vel < 0):
             
             pass
 
@@ -108,8 +106,8 @@ class Levitation_Object(Screen_Object):
             self.y += self.current_vel
             
     def __str__(self):
-        
-        return 'Levitation object:\n\tx: %d\ty: %d' % (self.x, self.y)
+        'Levitation object:\n\tx: %d\ty: %d' % (self.x, self.y)
+        return 'Levitation Object'
     
 
 Screen_Object.register(Ground)
@@ -124,23 +122,13 @@ def draw_sprites(game_scene):
         
 ground = Ground()
 levitator = Levitation_Object()
-import time
-CONNECTION_WAIT_TIME = 2 # seconds
 
 running = True
 while running:
 
-    if not player_brain.isConnected():
-        print 'Player brain not yet connected'
-        time.sleep(CONNECTION_WAIT_TIME)
-        continue
-        
-    screen.fill(Utilities.red)
-    #draw_sprites(game_scene)
     game_scene.clear(screen,background)
     game_scene.update()
     dirty = game_scene.draw(screen)
-    print dirty
     vel_text = font.render('Vel: \t' + str(levitator.current_vel),True,Utilities.black)
     screen.blit(vel_text,(0,vel_text.get_height()))
     
@@ -153,21 +141,21 @@ while running:
             running = False
             pygame.quit()
 
-##        elif event.type == pygame.KEYDOWN:
-##
-##            if event.key == pygame.K_UP:
-##
-##                attention += 0.1
-##                if attention > 1:
-##
-##                    attention = 1
-##
-##            elif event.key == pygame.K_DOWN:
-##
-##                attention -= 0.1
-##                if attention < 0:
-##
-##                    attention = 0
+        elif event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_UP:
+
+                attention += 0.1
+                if attention > 1:
+
+                    attention = 1
+
+            elif event.key == pygame.K_DOWN:
+
+                attention -= 0.1
+                if attention < 0:
+
+                    attention = 0
                     
 
     
